@@ -13,65 +13,93 @@
     tools:showIn="@layout/activity_main">
 
     <TextView
-        android:id="@+id/drinkOneLabel"
+        android:id="@+id/valveOneLabel"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
-        android:text="@string/drink_one_label"
+        android:text="@string/valve_one_label"
         android:textAppearance="?android:attr/textAppearanceLarge" />
 
     <SeekBar
-        android:id="@+id/drinkOneSeekBar"
+        android:id="@+id/valveOneSeekBar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentEnd="true"
         android:layout_alignParentStart="true"
-        android:layout_below="@+id/drinkOneLabel"
+        android:layout_below="@+id/valveOneLabel"
         android:layout_marginTop="20dp"
+        android:layout_toStartOf="@+id/valve_one_quantity"
         android:max="5"
         android:progress="0" />
 
     <TextView
-        android:id="@+id/drinkTwoLabel"
+        android:id="@+id/valve_one_quantity"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/valveOneSeekBar"
+        android:layout_alignParentEnd="true"
+        android:text="@string/zero"
+        android:textAppearance="?android:attr/textAppearanceSmall" />
+
+    <TextView
+        android:id="@+id/valveTwoLabel"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
-        android:layout_below="@+id/drinkOneSeekBar"
-        android:layout_marginTop="14dp"
-        android:text="@string/drink_two_label"
+        android:layout_below="@+id/valveOneSeekBar"
+        android:layout_marginTop="20dp"
+        android:text="@string/valve_two_label"
         android:textAppearance="?android:attr/textAppearanceLarge" />
 
     <SeekBar
-        android:id="@+id/drinkTwoSeekBar"
+        android:id="@+id/valveTwoSeekBar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentEnd="true"
         android:layout_alignParentStart="true"
-        android:layout_below="@+id/drinkTwoLabel"
+        android:layout_below="@+id/valveTwoLabel"
         android:layout_marginTop="20dp"
+        android:layout_toStartOf="@+id/valve_two_quantity"
         android:max="5"
         android:progress="0" />
 
     <TextView
-        android:id="@+id/drinkThreeLabel"
+        android:id="@+id/valve_two_quantity"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/valveTwoSeekBar"
+        android:layout_alignParentEnd="true"
+        android:text="@string/zero"
+        android:textAppearance="?android:attr/textAppearanceSmall" />
+
+    <TextView
+        android:id="@+id/valveThreeLabel"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
-        android:layout_below="@+id/drinkTwoSeekBar"
+        android:layout_below="@+id/valveTwoSeekBar"
         android:layout_marginTop="20dp"
-        android:text="@string/drink_three_label"
+        android:text="@string/valve_three_label"
         android:textAppearance="?android:attr/textAppearanceLarge" />
 
     <SeekBar
-        android:id="@+id/drinkThreeSeekBar"
+        android:id="@+id/valveThreeSeekBar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentEnd="true"
         android:layout_alignParentStart="true"
-        android:layout_below="@+id/drinkThreeLabel"
-        android:layout_marginTop="14dp"
+        android:layout_below="@+id/valveThreeLabel"
+        android:layout_marginTop="20dp"
+        android:layout_toStartOf="@+id/valve_three_quantity"
         android:max="5"
         android:progress="0" />
+
+    <TextView
+        android:id="@+id/valve_three_quantity"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/valveThreeSeekBar"
+        android:layout_alignParentEnd="true"
+        android:text="@string/zero"
+        android:textAppearance="?android:attr/textAppearanceSmall" />
 
 </RelativeLayout>

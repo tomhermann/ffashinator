@@ -1,0 +1,31 @@
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    android:title="@string/pref_header_valves">
+
+    <EditTextPreference
+        android:inputType="text"
+        android:key="valve_one_type"
+        android:maxLength="20"
+        android:maxLines="1"
+        android:selectAllOnFocus="true"
+        android:singleLine="true"
+        android:title="@string/valve_one_label" />
+
+    <EditTextPreference
+        android:inputType="text"
+        android:key="valve_two_type"
+        android:maxLength="20"
+        android:maxLines="1"
+        android:selectAllOnFocus="true"
+        android:singleLine="true"
+        android:title="@string/valve_two_label" />
+
+    <EditTextPreference
+        android:inputType="text"
+        android:key="valve_three_type"
+        android:maxLength="20"
+        android:maxLines="1"
+        android:selectAllOnFocus="true"
+        android:singleLine="true"
+        android:title="@string/valve_three_label" />
+
+</PreferenceScreen>

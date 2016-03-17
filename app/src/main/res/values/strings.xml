@@ -1,8 +1,24 @@
 <resources>
-    <string name="app_name">FFASHinator</string>
+    <string name="app_name">Bartender</string>
     <string name="action_settings">Settings</string>
-    <string name="drink_two_label">Drink Two</string>
-    <string name="drink_one_label">Drink One</string>
-    <string name="drink_three_label">Drink Three</string>
-    <string name="title_activity_main2">Main2Activity</string>
+
+    <string name="valve_one_label">Valve One</string>
+    <string name="valve_two_label">Valve Two</string>
+    <string name="valve_three_label">Valve Three</string>
+
+    <string name="title_activity_settings">Settings</string>
+
+    <!-- Strings related to Settings -->
+    <string name="pref_header_authentication">Authentication</string>
+    <string name="pref_title_social_recommendations">Enable social recommendations</string>
+    <string name="pref_description_social_recommendations">Recommendations for people to contact
+        based on your message history
+    </string>
+
+    <string name="pref_title_device_id">Device ID</string>
+    <string name="pref_title_email">Email Address</string>
+    <string name="pref_title_password">Password</string>
+    <string name="email_address">enter.me@example.com</string>
+    <string name="pref_header_valves">Valves</string>
+    <string name="zero">0</string>
 </resources>
