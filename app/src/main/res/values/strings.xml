@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">FFASHinator</string>
+    <string name="action_settings">Settings</string>
+    <string name="drink_two_label">Drink Two</string>
+    <string name="drink_one_label">Drink One</string>
+    <string name="drink_three_label">Drink Three</string>
+    <string name="title_activity_main2">Main2Activity</string>
+</resources>
