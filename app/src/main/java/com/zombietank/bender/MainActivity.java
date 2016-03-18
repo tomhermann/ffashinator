@@ -138,8 +138,7 @@ public class MainActivity extends RoboAppCompatActivity implements BartenderList
     }
 
     @Override
-    public void pourComplete(PourInformation pourInformation) {
-        showDispenseButton();
+    public void pourRequestComplete(PourInformation pourInformation) {
         animateProgress(valveOneProgressBar, valveOneSeekBar, pourInformation.getValveOneDuration());
         animateProgress(valveTwoProgressBar, valveTwoSeekBar, pourInformation.getValveTwoDuration());
         animateProgress(valveThreeProgressBar, valveThreeSeekBar, pourInformation.getValveThreeDuration());
@@ -184,7 +183,7 @@ public class MainActivity extends RoboAppCompatActivity implements BartenderList
 
     private void checkForCompletion() {
         if (isVisible(valveOneSeekBar) && isVisible(valveTwoSeekBar) && isVisible(valveThreeSeekBar)) {
-            dispenseButton.setEnabled(true);
+            showDispenseButton();
             Snackbar.make(dispenseButton, R.string.pour_complete_message, Snackbar.LENGTH_LONG).show();
         }
     }
@@ -198,7 +197,7 @@ public class MainActivity extends RoboAppCompatActivity implements BartenderList
     }
 
     private void showDispenseButton() {
-        checkForCompletion();
+        dispenseButton.setEnabled(true);
         dispenseButton.animate()
                 .alpha(1)
                 .setDuration(BUTTON_FADE_TIME_MILLIS)

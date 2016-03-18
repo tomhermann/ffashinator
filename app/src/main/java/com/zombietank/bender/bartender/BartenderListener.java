@@ -4,6 +4,6 @@ import io.particle.android.sdk.cloud.SparkCloudException;
 
 public interface BartenderListener {
     void pouring();
-    void pourComplete(PourInformation pourInformation);
+    void pourRequestComplete(PourInformation pourInformation);
     void pourFailed(SparkCloudException cause);
 }
