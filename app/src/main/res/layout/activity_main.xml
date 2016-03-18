@@ -30,6 +30,6 @@
         android:layout_gravity="bottom|end"
         android:layout_margin="@dimen/fab_margin"
         android:scaleType="center"
-        android:src="@mipmap/ic_launcher" />
+        android:src="@drawable/beverage_icon" />
 
 </android.support.design.widget.CoordinatorLayout>
