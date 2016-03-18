@@ -21,32 +21,6 @@ import java.util.List;
 
 public class SettingsActivity extends AppCompatPreferenceActivity {
 
-    private static Preference.OnPreferenceChangeListener summaryUpdatingListener = new Preference.OnPreferenceChangeListener() {
-        @Override
-        public boolean onPreferenceChange(Preference preference, Object value) {
-            if (preference instanceof EditTextPreference) {
-                EditTextPreference editTextPreference = (EditTextPreference) preference;
-                EditText editText = editTextPreference.getEditText();
-                String pref = editText.getTransformationMethod().getTransformation(value.toString(), editText).toString();
-                preference.setSummary(pref);
-            }
-            return true;
-        }
-    };
-
-    private static boolean isXLargeTablet(Context context) {
-        return (context.getResources().getConfiguration().screenLayout
-                & Configuration.SCREENLAYOUT_SIZE_MASK) >= Configuration.SCREENLAYOUT_SIZE_XLARGE;
-    }
-
-    private static void bindPreferenceSummaryToValue(Preference preference) {
-        preference.setOnPreferenceChangeListener(summaryUpdatingListener);
-        summaryUpdatingListener.onPreferenceChange(preference,
-                PreferenceManager
-                        .getDefaultSharedPreferences(preference.getContext())
-                        .getString(preference.getKey(), ""));
-    }
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -83,6 +57,32 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
         return PreferenceFragment.class.getName().equals(fragmentName)
                 || AuthenticationPreferenceCategory.class.getName().equals(fragmentName)
                 || ValvesPreferenceCategory.class.getName().equals(fragmentName);
+    }
+
+    private static Preference.OnPreferenceChangeListener summaryUpdatingListener = new Preference.OnPreferenceChangeListener() {
+        @Override
+        public boolean onPreferenceChange(Preference preference, Object value) {
+            if (preference instanceof EditTextPreference) {
+                EditTextPreference editTextPreference = (EditTextPreference) preference;
+                EditText editText = editTextPreference.getEditText();
+                String pref = editText.getTransformationMethod().getTransformation(value.toString(), editText).toString();
+                preference.setSummary(pref);
+            }
+            return true;
+        }
+    };
+
+    private static boolean isXLargeTablet(Context context) {
+        return (context.getResources().getConfiguration().screenLayout
+                & Configuration.SCREENLAYOUT_SIZE_MASK) >= Configuration.SCREENLAYOUT_SIZE_XLARGE;
+    }
+
+    private static void bindPreferenceSummaryToValue(Preference preference) {
+        preference.setOnPreferenceChangeListener(summaryUpdatingListener);
+        summaryUpdatingListener.onPreferenceChange(preference,
+                PreferenceManager
+                        .getDefaultSharedPreferences(preference.getContext())
+                        .getString(preference.getKey(), ""));
     }
 
     @TargetApi(Build.VERSION_CODES.HONEYCOMB)
