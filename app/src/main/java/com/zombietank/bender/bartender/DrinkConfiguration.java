@@ -1,6 +1,5 @@
 package com.zombietank.bender.bartender;
 
-import java.util.Collections;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
@@ -11,8 +10,8 @@ public class DrinkConfiguration {
         valvePours.put(valve, shots);
     }
 
-    public long getPourDurationInMilliseconds() {
-        return Collections.max(valvePours.values()) * 1500;
+    public long getPourDurationInMilliseconds(int valve) {
+        return valvePours.get(valve) * 1500;
     }
 
     public String buildCommand() {

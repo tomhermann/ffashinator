@@ -21,84 +21,130 @@
         android:text="@string/valve_one_label"
         android:textAppearance="?android:attr/textAppearanceLarge" />
 
-    <SeekBar
-        android:id="@+id/valveOneSeekBar"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:id="@+id/valveOneGroup"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentStart="true"
-        android:layout_below="@+id/valveOneLabel"
+        android:layout_below="@id/valveOneLabel"
         android:layout_marginTop="20dp"
-        android:layout_toStartOf="@+id/valve_one_quantity"
-        android:max="5"
-        android:progress="0" />
+        android:orientation="horizontal">
 
-    <TextView
-        android:id="@+id/valve_one_quantity"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignBottom="@+id/valveOneSeekBar"
-        android:layout_alignParentEnd="true"
-        android:text="@string/zero"
-        android:textAppearance="?android:attr/textAppearanceSmall" />
+        <SeekBar
+            android:id="@+id/valveOneSeekBar"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:max="5"
+            android:progress="0" />
+
+        <ProgressBar
+            android:id="@+id/valveOneProgress"
+            style="@style/Widget.AppCompat.ProgressBar.Horizontal"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_gravity="center"
+            android:layout_marginEnd="10dp"
+            android:max="100"
+            android:progress="0"
+            android:visibility="gone" />
+
+        <TextView
+            android:id="@+id/valve_one_quantity"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/zero"
+            android:textAppearance="?android:attr/textAppearanceSmall" />
+    </LinearLayout>
 
     <TextView
         android:id="@+id/valveTwoLabel"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
-        android:layout_below="@+id/valveOneSeekBar"
+        android:layout_below="@+id/valveOneGroup"
         android:layout_marginTop="20dp"
         android:text="@string/valve_two_label"
         android:textAppearance="?android:attr/textAppearanceLarge" />
 
-    <SeekBar
-        android:id="@+id/valveTwoSeekBar"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:id="@+id/valveTwoGroup"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentStart="true"
-        android:layout_below="@+id/valveTwoLabel"
+        android:layout_below="@id/valveTwoLabel"
         android:layout_marginTop="20dp"
-        android:layout_toStartOf="@+id/valve_two_quantity"
-        android:max="5"
-        android:progress="0" />
+        android:orientation="horizontal">
 
-    <TextView
-        android:id="@+id/valve_two_quantity"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignBottom="@+id/valveTwoSeekBar"
-        android:layout_alignParentEnd="true"
-        android:text="@string/zero"
-        android:textAppearance="?android:attr/textAppearanceSmall" />
+        <SeekBar
+            android:id="@+id/valveTwoSeekBar"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:max="5"
+            android:progress="0" />
+
+        <ProgressBar
+            android:id="@+id/valveTwoProgress"
+            style="@style/Widget.AppCompat.ProgressBar.Horizontal"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_gravity="center"
+            android:layout_marginEnd="10dp"
+            android:max="100"
+            android:progress="0"
+            android:visibility="gone" />
+
+        <TextView
+            android:id="@+id/valve_two_quantity"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/zero"
+            android:textAppearance="?android:attr/textAppearanceSmall" />
+    </LinearLayout>
 
     <TextView
         android:id="@+id/valveThreeLabel"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
-        android:layout_below="@+id/valveTwoSeekBar"
+        android:layout_below="@+id/valveTwoGroup"
         android:layout_marginTop="20dp"
         android:text="@string/valve_three_label"
         android:textAppearance="?android:attr/textAppearanceLarge" />
 
-    <SeekBar
-        android:id="@+id/valveThreeSeekBar"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentStart="true"
         android:layout_below="@+id/valveThreeLabel"
         android:layout_marginTop="20dp"
-        android:layout_toStartOf="@+id/valve_three_quantity"
-        android:max="5"
-        android:progress="0" />
+        android:orientation="horizontal">
 
-    <TextView
-        android:id="@+id/valve_three_quantity"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignBottom="@+id/valveThreeSeekBar"
-        android:layout_alignParentEnd="true"
-        android:text="@string/zero"
-        android:textAppearance="?android:attr/textAppearanceSmall" />
+        <SeekBar
+            android:id="@+id/valveThreeSeekBar"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:max="5"
+            android:progress="0"/>
 
+        <ProgressBar
+            android:id="@+id/valveThreeProgress"
+            style="@style/Widget.AppCompat.ProgressBar.Horizontal"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginEnd="10dp"
+            android:max="100"
+            android:progress="0"
+            android:visibility="gone"/>
+
+        <TextView
+            android:id="@+id/valve_three_quantity"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/zero"
+            android:textAppearance="?android:attr/textAppearanceSmall" />
+    </LinearLayout>
 </RelativeLayout>

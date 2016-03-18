@@ -1,5 +1,7 @@
 package com.zombietank.bender;
 
+import android.animation.Animator;
+import android.animation.ObjectAnimator;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -10,6 +12,9 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.animation.DecelerateInterpolator;
+import android.view.animation.LinearInterpolator;
+import android.widget.ProgressBar;
 import android.widget.SeekBar;
 import android.widget.TextView;
 
@@ -17,6 +22,7 @@ import com.google.inject.Inject;
 import com.zombietank.bender.bartender.Bartender;
 import com.zombietank.bender.bartender.BartenderListener;
 import com.zombietank.bender.bartender.DrinkConfiguration;
+import com.zombietank.bender.bartender.PourInformation;
 import com.zombietank.bender.settings.SettingsActivity;
 
 import roboguice.activity.RoboAppCompatActivity;
@@ -36,6 +42,13 @@ public class MainActivity extends RoboAppCompatActivity implements BartenderList
     private SeekBar valveTwoSeekBar;
     @InjectView(R.id.valveThreeSeekBar)
     private SeekBar valveThreeSeekBar;
+
+    @InjectView(R.id.valveOneProgress)
+    private ProgressBar valveOneProgressBar;
+    @InjectView(R.id.valveTwoProgress)
+    private ProgressBar valveTwoProgressBar;
+    @InjectView(R.id.valveThreeProgress)
+    private ProgressBar valveThreeProgressBar;
 
     @InjectView(R.id.valveOneLabel)
     private TextView valveOneLabel;
@@ -131,14 +144,52 @@ public class MainActivity extends RoboAppCompatActivity implements BartenderList
     }
 
     @Override
-    public void pourComplete(boolean success) {
+    public void pourComplete(PourInformation pourInformation) {
         showDispenseButton();
-        if(success) {
-            Snackbar.make(dispenseButton, "Pour Complete! Enjoy!", Snackbar.LENGTH_LONG).show();
-        } else {
+        if(pourInformation == null) {
             Snackbar.make(dispenseButton, "Failed to pour your drink, sorry.", Snackbar.LENGTH_LONG).show();
+        } else {
+            animateProgress(valveOneProgressBar, valveOneSeekBar, pourInformation.getValveOneDuration());
+            animateProgress(valveTwoProgressBar, valveTwoSeekBar, pourInformation.getValveTwoDuration());
+            animateProgress(valveThreeProgressBar, valveThreeSeekBar, pourInformation.getValveThreeDuration());
         }
-        dispenseButton.setEnabled(true);
+    }
+
+    private void animateProgress(final ProgressBar progressBar, final SeekBar seekBar, long duration) {
+        ObjectAnimator animation = ObjectAnimator.ofInt(progressBar, "progress", 0, 100);
+        animation.setDuration(duration);
+        animation.setInterpolator(new LinearInterpolator());
+        animation.addListener(new Animator.AnimatorListener() {
+            @Override
+            public void onAnimationStart(Animator animation) {
+                seekBar.setVisibility(View.GONE);
+                progressBar.setVisibility(View.VISIBLE);
+            }
+
+            @Override
+            public void onAnimationEnd(Animator animation) {
+                seekBar.setVisibility(View.VISIBLE);
+                progressBar.setVisibility(View.GONE);
+                checkForCompletion();
+            }
+
+            @Override
+            public void onAnimationCancel(Animator animation) {
+            }
+
+            @Override
+            public void onAnimationRepeat(Animator animation) {
+            }
+        });
+
+        animation.start();
+    }
+
+    private void checkForCompletion() {
+        if(valveOneSeekBar.getVisibility() == View.VISIBLE && valveTwoSeekBar.getVisibility() == View.VISIBLE && valveThreeSeekBar.getVisibility() == View.VISIBLE ) {
+            dispenseButton.setEnabled(true);
+            Snackbar.make(dispenseButton, "Pour Complete! Enjoy!", Snackbar.LENGTH_LONG).show();
+        }
     }
 
     private void hideDispenseButton() {
@@ -161,7 +212,6 @@ public class MainActivity extends RoboAppCompatActivity implements BartenderList
         valveTwoLabel.setText(sharedPreferences.getString("valve_two_type", getString(R.string.valve_two_label)));
         valveThreeLabel.setText(sharedPreferences.getString("valve_three_type", getString(R.string.valve_three_label)));
     }
-
 
     private static class DrinkBarListener implements SeekBar.OnSeekBarChangeListener {
         private final TextView drinkBarLabel;
