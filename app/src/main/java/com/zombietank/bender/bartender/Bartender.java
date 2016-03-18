@@ -59,13 +59,13 @@ public class Bartender extends RoboFragment {
                 SparkDevice device = sparkCloud.getDevice(preferences.getString("device_id", ""));
                 try {
                     Log.i(TAG, "Go for all!");
-                    device.callFunction("setValve", Collections.singletonList("all"));
+                    device.callFunction("pourDrink", Collections.singletonList(drink.buildCommand()));
                 } catch (SparkDevice.FunctionDoesNotExistException e) {
                     throw new SparkCloudException(e);
                 }
 
                 try {
-                    TimeUnit.SECONDS.sleep(getPourDurationInSeconds(drink));
+                    Thread.sleep(drink.getPourDurationInMilliseconds());
                 } catch (InterruptedException ignored) {
                 }
 
@@ -86,9 +86,5 @@ public class Bartender extends RoboFragment {
                 listener.pourComplete(false);
             }
         });
-    }
-
-    private long getPourDurationInSeconds(DrinkConfiguration drink) {
-        return ((long) (drink.getTotalShotCount() * 1.5));
     }
 }

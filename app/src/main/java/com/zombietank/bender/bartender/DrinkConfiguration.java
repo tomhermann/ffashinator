@@ -11,16 +11,17 @@ public class DrinkConfiguration {
         valvePours.put(valve, shots);
     }
 
-    public Map<Integer, Integer> getPoursPerValve() {
-        return Collections.unmodifiableMap(valvePours);
+    public long getPourDurationInMilliseconds() {
+        return Collections.max(valvePours.values()) * 1500;
     }
 
-    public int getTotalShotCount() {
-        int shotCount = 0;
-        for (Integer value : valvePours.values()) {
-            shotCount += value;
+    public String buildCommand() {
+        String result = "";
+        for (int i = 0; i < 3; i++) {
+            Integer shotCount = valvePours.get(i);
+            result += (shotCount == null ? "0" : shotCount);
         }
-        return shotCount;
+        return result;
     }
 
     @Override
