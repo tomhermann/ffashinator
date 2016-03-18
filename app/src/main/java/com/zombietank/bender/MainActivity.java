@@ -139,14 +139,14 @@ public class MainActivity extends RoboAppCompatActivity implements BartenderList
     public void pouring() {
         hideDispenseButton();
         dispenseButton.setEnabled(false);
-        Snackbar.make(dispenseButton, "Now Pouring!", Snackbar.LENGTH_INDEFINITE).show();
+        Snackbar.make(dispenseButton, R.string.now_pouring_message, Snackbar.LENGTH_INDEFINITE).show();
     }
 
     @Override
     public void pourComplete(PourInformation pourInformation) {
         showDispenseButton();
         if (pourInformation == null) {
-            Snackbar.make(dispenseButton, "Failed to pour your drink, sorry.", Snackbar.LENGTH_LONG).show();
+            Snackbar.make(dispenseButton, R.string.pour_failed_message, Snackbar.LENGTH_LONG).show();
         } else {
             animateProgress(valveOneProgressBar, valveOneSeekBar, pourInformation.getValveOneDuration());
             animateProgress(valveTwoProgressBar, valveTwoSeekBar, pourInformation.getValveTwoDuration());
@@ -187,7 +187,7 @@ public class MainActivity extends RoboAppCompatActivity implements BartenderList
     private void checkForCompletion() {
         if (isVisible(valveOneSeekBar) && isVisible(valveTwoSeekBar) && isVisible(valveThreeSeekBar)) {
             dispenseButton.setEnabled(true);
-            Snackbar.make(dispenseButton, "Pour Complete! Enjoy!", Snackbar.LENGTH_LONG).show();
+            Snackbar.make(dispenseButton, R.string.pour_complete_message, Snackbar.LENGTH_LONG).show();
         }
     }
 

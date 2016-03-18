@@ -1,24 +1,25 @@
 <resources>
     <string name="app_name">Bartender</string>
-    <string name="action_settings">Settings</string>
+    <string name="zero">0</string>
 
-    <string name="valve_one_label">Valve One</string>
-    <string name="valve_two_label">Valve Two</string>
-    <string name="valve_three_label">Valve Three</string>
-
-    <string name="title_activity_settings">Settings</string>
+    <!-- Pouring feedback -->
+    <string name="now_pouring_message">Now Pouring!</string>
+    <string name="pour_complete_message">Pour Complete! Enjoy!</string>
+    <string name="pour_failed_message">Failed to pour your drink, sorry.</string>
 
     <!-- Strings related to Settings -->
+    <string name="action_settings">Settings</string>
+    <string name="title_activity_settings">Settings</string>
     <string name="pref_header_authentication">Authentication</string>
-    <string name="pref_title_social_recommendations">Enable social recommendations</string>
-    <string name="pref_description_social_recommendations">Recommendations for people to contact
-        based on your message history
-    </string>
+    <string name="pref_header_valves">Valves</string>
 
     <string name="pref_title_device_id">Device ID</string>
     <string name="pref_title_email">Email Address</string>
     <string name="pref_title_password">Password</string>
     <string name="email_address">enter.me@example.com</string>
-    <string name="pref_header_valves">Valves</string>
-    <string name="zero">0</string>
+
+    <!-- Valve labels -->
+    <string name="valve_one_label">Valve One</string>
+    <string name="valve_two_label">Valve Two</string>
+    <string name="valve_three_label">Valve Three</string>
 </resources>
