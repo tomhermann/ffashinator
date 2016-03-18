@@ -50,9 +50,9 @@ public class Bartender extends RoboFragment {
         pouring = true;
         listener.pouring();
 
-        Async.executeAsync(SparkCloud.get(getContext()), new Async.ApiWork<SparkCloud, Void>() {
+        Async.executeAsync(SparkCloud.get(getContext()), new Async.ApiWork<SparkCloud, PourInformation>() {
             @Override
-            public Void callApi(SparkCloud sparkCloud) throws SparkCloudException, IOException {
+            public PourInformation callApi(SparkCloud sparkCloud) throws SparkCloudException, IOException {
                 sparkCloud.logIn(preferences.getString("email_address", ""), preferences.getString("password", ""));
                 SparkDevice device = sparkCloud.getDevice(preferences.getString("device_id", ""));
                 try {
@@ -62,26 +62,23 @@ public class Bartender extends RoboFragment {
                     throw new SparkCloudException(e);
                 }
 
-                try {
-                    Thread.sleep(drink.getPourDurationInMilliseconds());
-                } catch (InterruptedException ignored) {
-                }
-
-                return null;
+                return new PourInformation(drink.getPourDurationInMilliseconds(0),
+                        drink.getPourDurationInMilliseconds(1),
+                        drink.getPourDurationInMilliseconds(2));
             }
 
             @Override
-            public void onSuccess(Void nothing) {
+            public void onSuccess(PourInformation pourInformation) {
                 Log.i(TAG, "Finished Pouring!");
                 pouring = false;
-                listener.pourComplete(true);
+                listener.pourComplete(pourInformation);
             }
 
             @Override
             public void onFailure(SparkCloudException exception) {
                 Log.e(TAG, "Failed to pour", exception);
                 pouring = false;
-                listener.pourComplete(false);
+                listener.pourComplete(null);
             }
         });
     }
