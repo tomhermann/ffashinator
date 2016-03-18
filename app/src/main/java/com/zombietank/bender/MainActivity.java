@@ -171,6 +171,7 @@ public class MainActivity extends RoboAppCompatActivity implements BartenderList
 
             @Override
             public void onAnimationCancel(Animator animation) {
+                onAnimationEnd(animation);
             }
 
             @Override
@@ -197,6 +198,7 @@ public class MainActivity extends RoboAppCompatActivity implements BartenderList
     }
 
     private void showDispenseButton() {
+        checkForCompletion();
         dispenseButton.animate()
                 .alpha(1)
                 .setDuration(BUTTON_FADE_TIME_MILLIS)
