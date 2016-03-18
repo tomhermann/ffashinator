@@ -12,7 +12,6 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.animation.DecelerateInterpolator;
 import android.view.animation.LinearInterpolator;
 import android.widget.ProgressBar;
 import android.widget.SeekBar;
@@ -146,7 +145,7 @@ public class MainActivity extends RoboAppCompatActivity implements BartenderList
     @Override
     public void pourComplete(PourInformation pourInformation) {
         showDispenseButton();
-        if(pourInformation == null) {
+        if (pourInformation == null) {
             Snackbar.make(dispenseButton, "Failed to pour your drink, sorry.", Snackbar.LENGTH_LONG).show();
         } else {
             animateProgress(valveOneProgressBar, valveOneSeekBar, pourInformation.getValveOneDuration());
@@ -186,10 +185,14 @@ public class MainActivity extends RoboAppCompatActivity implements BartenderList
     }
 
     private void checkForCompletion() {
-        if(valveOneSeekBar.getVisibility() == View.VISIBLE && valveTwoSeekBar.getVisibility() == View.VISIBLE && valveThreeSeekBar.getVisibility() == View.VISIBLE ) {
+        if (isVisible(valveOneSeekBar) && isVisible(valveTwoSeekBar) && isVisible(valveThreeSeekBar)) {
             dispenseButton.setEnabled(true);
             Snackbar.make(dispenseButton, "Pour Complete! Enjoy!", Snackbar.LENGTH_LONG).show();
         }
+    }
+
+    private static boolean isVisible(View view) {
+        return view.getVisibility() == View.VISIBLE;
     }
 
     private void hideDispenseButton() {
