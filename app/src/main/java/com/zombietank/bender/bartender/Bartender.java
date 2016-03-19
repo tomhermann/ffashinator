@@ -71,14 +71,14 @@ public class Bartender extends RoboFragment {
             public void onSuccess(PourInformation pourInformation) {
                 Log.i(TAG, "Finished Pouring!");
                 pouring = false;
-                listener.pourComplete(pourInformation);
+                listener.pourRequestComplete(pourInformation);
             }
 
             @Override
             public void onFailure(SparkCloudException exception) {
                 Log.e(TAG, "Failed to pour", exception);
                 pouring = false;
-                listener.pourComplete(null);
+                listener.pourFailed(exception);
             }
         });
     }

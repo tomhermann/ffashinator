@@ -9,6 +9,7 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.widget.Toolbar;
+import android.text.TextUtils;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -24,6 +25,7 @@ import com.zombietank.bender.bartender.DrinkConfiguration;
 import com.zombietank.bender.bartender.PourInformation;
 import com.zombietank.bender.settings.SettingsActivity;
 
+import io.particle.android.sdk.cloud.SparkCloudException;
 import roboguice.activity.RoboAppCompatActivity;
 import roboguice.inject.ContentView;
 import roboguice.inject.InjectView;
@@ -32,6 +34,7 @@ import roboguice.inject.InjectView;
 public class MainActivity extends RoboAppCompatActivity implements BartenderListener {
     private static final String BARTENDER_TAG = "BARTENDER_TAG";
     private static final int BUTTON_FADE_TIME_MILLIS = 1000;
+
     @InjectView(R.id.fab)
     private FloatingActionButton dispenseButton;
 
@@ -55,7 +58,6 @@ public class MainActivity extends RoboAppCompatActivity implements BartenderList
     private TextView valveTwoLabel;
     @InjectView(R.id.valveThreeLabel)
     private TextView valveThreeLabel;
-
 
     @InjectView(R.id.valve_one_quantity)
     private TextView valveOneQuantity;
@@ -87,11 +89,9 @@ public class MainActivity extends RoboAppCompatActivity implements BartenderList
         dispenseButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Bartender bartender = findBartender();
-                bartender.pour(drink());
+                bartender().pour(drink());
             }
         });
-
     }
 
     private DrinkConfiguration drink() {
@@ -108,8 +108,7 @@ public class MainActivity extends RoboAppCompatActivity implements BartenderList
 
         setValveLabels();
 
-        Bartender bartender = findBartender();
-        if (bartender.isPouring()) {
+        if (bartender().isPouring()) {
             pouring();
         }
     }
@@ -131,10 +130,6 @@ public class MainActivity extends RoboAppCompatActivity implements BartenderList
         return super.onOptionsItemSelected(item);
     }
 
-    private Bartender findBartender() {
-        return (Bartender) getSupportFragmentManager().findFragmentByTag(BARTENDER_TAG);
-    }
-
     @Override
     public void pouring() {
         hideDispenseButton();
@@ -143,15 +138,16 @@ public class MainActivity extends RoboAppCompatActivity implements BartenderList
     }
 
     @Override
-    public void pourComplete(PourInformation pourInformation) {
+    public void pourRequestComplete(PourInformation pourInformation) {
+        animateProgress(valveOneProgressBar, valveOneSeekBar, pourInformation.getValveOneDuration());
+        animateProgress(valveTwoProgressBar, valveTwoSeekBar, pourInformation.getValveTwoDuration());
+        animateProgress(valveThreeProgressBar, valveThreeSeekBar, pourInformation.getValveThreeDuration());
+    }
+
+    @Override
+    public void pourFailed(SparkCloudException cause) {
         showDispenseButton();
-        if (pourInformation == null) {
-            Snackbar.make(dispenseButton, R.string.pour_failed_message, Snackbar.LENGTH_LONG).show();
-        } else {
-            animateProgress(valveOneProgressBar, valveOneSeekBar, pourInformation.getValveOneDuration());
-            animateProgress(valveTwoProgressBar, valveTwoSeekBar, pourInformation.getValveTwoDuration());
-            animateProgress(valveThreeProgressBar, valveThreeSeekBar, pourInformation.getValveThreeDuration());
-        }
+        showErrorMessage(cause);
     }
 
     private void animateProgress(final ProgressBar progressBar, final SeekBar seekBar, long duration) {
@@ -174,6 +170,7 @@ public class MainActivity extends RoboAppCompatActivity implements BartenderList
 
             @Override
             public void onAnimationCancel(Animator animation) {
+                onAnimationEnd(animation);
             }
 
             @Override
@@ -186,13 +183,9 @@ public class MainActivity extends RoboAppCompatActivity implements BartenderList
 
     private void checkForCompletion() {
         if (isVisible(valveOneSeekBar) && isVisible(valveTwoSeekBar) && isVisible(valveThreeSeekBar)) {
-            dispenseButton.setEnabled(true);
+            showDispenseButton();
             Snackbar.make(dispenseButton, R.string.pour_complete_message, Snackbar.LENGTH_LONG).show();
         }
-    }
-
-    private static boolean isVisible(View view) {
-        return view.getVisibility() == View.VISIBLE;
     }
 
     private void hideDispenseButton() {
@@ -204,16 +197,31 @@ public class MainActivity extends RoboAppCompatActivity implements BartenderList
     }
 
     private void showDispenseButton() {
+        dispenseButton.setEnabled(true);
         dispenseButton.animate()
                 .alpha(1)
                 .setDuration(BUTTON_FADE_TIME_MILLIS)
                 .start();
     }
 
+    private void showErrorMessage(SparkCloudException cause) {
+        String serverErrorMsg = cause.getServerErrorMsg();
+        String errorMessage = !TextUtils.isEmpty(serverErrorMsg) ? serverErrorMsg : getString(R.string.pour_failed_message);
+        Snackbar.make(dispenseButton, errorMessage, Snackbar.LENGTH_LONG).show();
+    }
+
     private void setValveLabels() {
         valveOneLabel.setText(sharedPreferences.getString("valve_one_type", getString(R.string.valve_one_label)));
         valveTwoLabel.setText(sharedPreferences.getString("valve_two_type", getString(R.string.valve_two_label)));
         valveThreeLabel.setText(sharedPreferences.getString("valve_three_type", getString(R.string.valve_three_label)));
+    }
+
+    private Bartender bartender() {
+        return (Bartender) getSupportFragmentManager().findFragmentByTag(BARTENDER_TAG);
+    }
+
+    private static boolean isVisible(View view) {
+        return view.getVisibility() == View.VISIBLE;
     }
 
     private static class DrinkBarListener implements SeekBar.OnSeekBarChangeListener {
